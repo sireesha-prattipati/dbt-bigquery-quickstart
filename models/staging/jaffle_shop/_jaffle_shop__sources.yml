@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: jaffle_shop
+    database: grand-hangar-463421-k1
+    schema: jaffle_shop
+    tables:
+      - name: customers
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
+      - name: orders
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
+  - name: stripe
+    database: grand-hangar-463421-k1
+    schema: stripe
+    loaded_at_field: batched_at
+    freshness:
+        warn_after: {count: 12, period: hour}
+        error_after: {count: 24, period: hour}
+    tables:
+      - name: payments
